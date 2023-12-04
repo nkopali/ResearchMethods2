@@ -1,0 +1,5 @@
+tensorflow
+torch
+opencv-python
+google-cloud-vision
+deeplake
