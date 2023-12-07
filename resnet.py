@@ -19,9 +19,13 @@ def main():
     classes = ('plane', 'car', 'bird', 'cat', 'deer',
                'dog', 'frog', 'horse', 'ship', 'truck')
     
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
     # Load a pre-trained ResNet50 model
     net = torchvision.models.resnet50(pretrained=True)
     net.fc = nn.Linear(net.fc.in_features, 10)  # Adapt the final layer for CIFAR-10
+
+    net = net.to(device)
 
     # Switch the model to evaluation mode
     net.eval()
@@ -33,15 +37,17 @@ def main():
     with torch.no_grad():
         for data in testloader:
             images, labels = data
+            # Move images and labels to the same device as the model
+            images, labels = images.to(device), labels.to(device)
+
             outputs = net(images)
             _, predicted = torch.max(outputs.data, 1)
-            counter += 1
 
             total += labels.size(0)
             correct += (predicted == labels).sum().item()
-            if counter == 500:  # Just to show a few predictions
-                print("#############", correct, total)
-                break
+    print(f'Accuracy of the network on the 10000 test images: {100 * correct / total}%')
+
+
 
 if __name__ == '__main__':
     main()
