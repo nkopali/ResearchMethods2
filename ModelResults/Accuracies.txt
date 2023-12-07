@@ -1,0 +1,11 @@
+Resnet50: 
+Accuracy: 90% 
+Time: 30 min 53 sec
+
+YoloV8: 
+Accuracy: 71% 
+Time: 12 min 32 sec
+
+Alexnet:
+Accuracy: 69 %
+Time: 11 min 24 sec
