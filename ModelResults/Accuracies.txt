@@ -1,3 +1,5 @@
+All of them were trained for 3 Epochs on Nvidia 3060
+
 Resnet50: 
 Accuracy: 90% 
 Time: 30 min 53 sec
