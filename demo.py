@@ -14,7 +14,11 @@ def main():
     uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png"])
     if uploaded_file is not None:
         image = Image.open(io.BytesIO(uploaded_file.read()))
-        
+        w, h = image.size
+        ratio = 32 / min(w, h)
+        image = image.resize((round(w * ratio), round(h*ratio)))
+        w, h = image.size
+        image = image.crop((w/2 - 16, h/2-16, w/2 + 16, h/2+16))
         # Display the image
         st.image(image, caption='Uploaded Image', width=300)
 
