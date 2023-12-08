@@ -79,29 +79,29 @@ def main():
 
     print(f"Duration: {duration} seconds")
 
-    # Step 5: Test the Model
-    y_pred = []
-    y_true = []
-    with torch.no_grad():
-        for data in testloader:
-            images, labels = data[0].to(device), data[1].to(device)
-            outputs = net(images)
-            _, predicted = torch.max(outputs.data, 1)
-            y_pred.extend(predicted.cpu().numpy())
-            y_true.extend(labels.cpu().numpy())
+    # # Step 5: Test the Model
+    # y_pred = []
+    # y_true = []
+    # with torch.no_grad():
+    #     for data in testloader:
+    #         images, labels = data[0].to(device), data[1].to(device)
+    #         outputs = net(images)
+    #         _, predicted = torch.max(outputs.data, 1)
+    #         y_pred.extend(predicted.cpu().numpy())
+    #         y_true.extend(labels.cpu().numpy())
 
-    print('Finished Testing')
+    # print('Finished Testing')
 
-    # Step 6: Calculate and Print Metrics
-    # Confusion Matrix
-    conf_matrix = confusion_matrix(y_true, y_pred)
-    print("Confusion Matrix:")
-    print(conf_matrix)
+    # # Step 6: Calculate and Print Metrics
+    # # Confusion Matrix
+    # conf_matrix = confusion_matrix(y_true, y_pred)
+    # print("Confusion Matrix:")
+    # print(conf_matrix)
 
-    # Classification Report (Precision, Recall, F1-score)
-    class_report = classification_report(y_true, y_pred, target_names=trainset.classes)
-    print("Classification Report:")
-    print(class_report)
+    # # Classification Report (Precision, Recall, F1-score)
+    # class_report = classification_report(y_true, y_pred, target_names=trainset.classes)
+    # print("Classification Report:")
+    # print(class_report)
 
     # Step 7: Test the Model with noise
     y_pred = []

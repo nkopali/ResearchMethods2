@@ -26,6 +26,8 @@ def main():
     print(f"Duration: {duration} seconds")
 
     metrics = model.val()  
+    model.val(data='./cifar-10-batches-py')
+        
 
 
 if __name__ == '__main__':

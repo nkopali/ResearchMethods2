@@ -1,13 +1,16 @@
 All of them were trained for 3 Epochs on Nvidia 3060
 
 Resnet50: 
-Accuracy: 90% 
+Accuracy Clean: 90% 
+Accuracy Noise: 92%
 Time: 30 min 53 sec
 
 YoloV8: 
 Accuracy: 71% 
+Accuracy Noise: 70%
 Time: 12 min 32 sec
 
 Alexnet:
-Accuracy: 69 %
+Accuracy: 70 %
+Accuracy Noise: 69 %
 Time: 11 min 24 sec
