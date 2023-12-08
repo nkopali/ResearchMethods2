@@ -1,6 +1,50 @@
 #!/usr/bin/env python3
 
+import torch
+import torchvision
+import torchvision.transforms as transforms
+import torch.nn as nn
+import torch.optim as optim
+from sklearn.metrics import confusion_matrix, classification_report
+import numpy as np
+import time
+
+
 # Run this file in the same location as your cifar dataset to get a copy with noise added to the test subset
+# Alternatively, use this as a pytorch transform
+
+# apply this before any other transform
+class AddNoise(torch.nn.Module):
+    def __init__(self, amplitude, monochromatic):
+        super().__init__()
+        self.amplitude = amplitude
+        self.monochromatic = monochromatic
+
+
+    def forward(self, img):
+        from PIL import Image, ImageChops
+        """
+        Args:
+            img (PIL Image or Tensor): Image to be scaled.
+
+        Returns:
+            PIL Image or Tensor: Rescaled image.
+        """
+
+        print(img)
+        if self.monochromatic:
+            imdata = np.random.randint(0, self.amplitude, (32, 32), dtype=np.uint8)
+            noise = Image.fromarray(imdata).convert('RGB')
+            ImageChops.add(img, noise).show()
+            return ImageChops.add(img, noise);
+        else:
+            imdata = np.random.randint(0, self.amplitude, (32, 32, 3), dtype=np.uint8)
+            noise = Image.fromarray(imdata)
+            return ImageChops.add(img, noise);
+
+    def __repr__(self) -> str:
+        return f"{self.__class__.__name__}{size}"
+
 
 def unpickle(file):
     import pickle
@@ -18,7 +62,8 @@ def save(name, raw):
     import numpy as np
     from PIL import Image
 
-    imdata =  np.zeros((32, 32, 3), dtype=np.uint8)
+    imdata =  np.random((32, 32, 3), dtype=np.uint8)
+
     for i in range(32):
         for j in range(32):
             imdata[i][j][0] = raw[i+32*j]
