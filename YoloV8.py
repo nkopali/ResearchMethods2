@@ -29,8 +29,9 @@ def test_noise_dataset():
                 #print(model.names[result[0].probs.top1])
             y_pred.append(model.names[result[0].probs.top1])
             y_true.append(class_folder)
+            
             if class_folder != model.names[result[0].probs.top1]:
-                print("#############################################################################################",image_path)
+                print("Missclassified: ",image_path)
 
     # Classification Report (Precision, Recall, F1-score)
     class_report = classification_report(y_true, y_pred, target_names=trainset_classes)
