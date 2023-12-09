@@ -6,6 +6,7 @@ Time: 30 min 53 sec
 
 YoloV8: 
 Accuracy: 71% 
+Accuracy Noise: 27%
 Time: 12 min 32 sec
 
 Alexnet:

@@ -66,6 +66,10 @@ def main():
     duration = end_time - start_time
 
     print(f"Duration: {duration} seconds")
+   
+    #Save the Model
+    model_save_path = './resnet50.pth'
+    torch.save(net.state_dict(), model_save_path)
 
     # Step 5: Test the Model
     y_pred = []

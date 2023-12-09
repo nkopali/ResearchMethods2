@@ -33,7 +33,9 @@ net = alexnet.to(device)
 criterion = nn.CrossEntropyLoss()
 optimizer = optim.SGD(alexnet.parameters(), lr=0.001, momentum=0.9)
 
-print('Starting Training')
+# Step 2: Modify AlexNet for CIFAR10
+alexnet = models.alexnet(pretrained=True)
+alexnet.classifier[6] = nn.Linear(alexnet.classifier[6].in_features, 10) 
 
 # Step 4: Train the Model
 for epoch in range(3):  
@@ -71,7 +73,25 @@ with torch.no_grad():
         y_pred.extend(predicted.cpu().numpy())
         y_true.extend(labels.cpu().numpy())
 
-print('Finished Testing')
+    print(f"Duration: {duration} seconds")
+
+    #Save the Model
+    model_save_path = './alexnet.pth'
+    torch.save(net.state_dict(), model_save_path)
+
+    # # Step 5: Test the Model
+    # y_pred = []
+    # y_true = []
+
+    # with torch.no_grad():
+    #     for data in testloader:
+    #         images, labels = data[0].to(device), data[1].to(device)
+    #         outputs = net(images)
+    #         _, predicted = torch.max(outputs.data, 1)
+    #         y_pred.extend(predicted.cpu().numpy())
+    #         y_true.extend(labels.cpu().numpy())
+
+    # print('Finished Testing')
 
 
 # Step 6: Calculate and Print Metrics
