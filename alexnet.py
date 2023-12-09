@@ -36,7 +36,7 @@ def main():
                                                 shuffle=False, num_workers=2)
 
     # Step 2: Modify AlexNet for CIFAR10
-    alexnet = models.alexnet(pretrained=False)
+    alexnet = models.alexnet(pretrained=True)
     alexnet.classifier[6] = nn.Linear(alexnet.classifier[6].in_features, 10) 
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -71,6 +71,10 @@ def main():
     duration = end_time - start_time
 
     print(f"Duration: {duration} seconds")
+
+    # Save the model
+    torch.save(net.state_dict(), 'alexnet_cifar10.pth')
+    
 
     # Step 5: Test the Model
     y_pred = []

@@ -1,5 +1,7 @@
-tensorflow
+streamlit
+Pillow
 torch
-opencv-python
-google-cloud-vision
 torchvision
+scikit-learn
+numpy
+ultralytics
