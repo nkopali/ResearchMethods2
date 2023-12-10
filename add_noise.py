@@ -62,7 +62,7 @@ def save(name, raw):
     import numpy as np
     from PIL import Image
 
-    imdata =  np.random((32, 32, 3), dtype=np.uint8)
+    imdata =  np.zeros((32, 32, 3), dtype=np.uint8)
 
     for i in range(32):
         for j in range(32):
@@ -73,7 +73,36 @@ def save(name, raw):
     img = Image.fromarray(imdata, 'RGB');
     img.save(name);
 
-def main():
+def prep_for_yolo():
+    import subprocess
+    import random
+
+    noise_amp = 30
+    monochromatic_noise = True
+
+    print("attempting to unpack tar")
+    subprocess.run(["tar", "-xzvf", "cifar-10-python-noisy.tar.gz"])
+
+    print("loading test set")
+    testset = unpickle("cifar-10-batches-py/test_batch")
+
+    print("loading labels")
+    labels = unpickle("cifar-10-batches-py/batches.meta")
+    print(labels)
+
+    for lab in labels['label_names']:
+        subprocess.run(["mkdir", "-p", "cifar10_for_yolo/" + lab])
+
+    for i in range(labels['num_cases_per_batch']):
+        save("cifar10_for_yolo/" + labels['label_names'][testset['labels'][i]] + f"/{i}.jpg", testset['data'][i])
+
+    subprocess.run(["tar", "-czvf", "cifar-10-yolo-noisy.tar.gz", "cifar10_for_yolo"])
+
+    print("cleaning up")
+    subprocess.run(["rm", "-rf", "cifar10_for_yolo"])
+
+
+def add_noise_and_save():
     import subprocess
     import random
 
@@ -112,4 +141,5 @@ def main():
     subprocess.run(["rm", "-rf", "cifar-10-batches-py"])
 
 if __name__ == '__main__':
-    main()
+    add_noise_and_save()
+    prep_for_yolo()
